@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Notice Board</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    .notice {
+      background: #fff;
+      border-left: 5px solid #2196f3;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .time {
+      font-size: 0.8em;
+      color: #555;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Student Notice Board</h1>
+  <div id="noticeContainer"></div>
+
+  <script>
+    function loadNotices() {
+      const notices = JSON.parse(localStorage.getItem("noticeEntries")) || [];
+      const container = document.getElementById("noticeContainer");
+      container.innerHTML = '';
+
+      notices.reverse().forEach(entry => {
+        const div = document.createElement("div");
+        div.className = "notice";
+        div.innerHTML = <div>${entry.text}</div><div class="time">${entry.time}</div>;
+        container.appendChild(div);
+      });
+    }
+
+    window.onload = loadNotices;
+  </script>
+</body>
+</html>

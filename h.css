@@ -1,0 +1,237 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Variables & Reset
+───────────────────────────────────────────────────────────────────────────── */
+:root {
+    --primary: #5865f2;
+    --secondary: #2f3136;
+    --bg: #f5f7fa;
+    --card-bg: #ffffff;
+    --text: #2c2f33;
+    --text-light: #555555;
+    --overlay: rgba(0, 0, 0, 0.5);
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────────
+     Header / Navigation
+  ───────────────────────────────────────────────────────────────────────────── */
+  header {
+    background: var(--secondary);
+    padding: 0.75rem 1.5rem;
+  }
+  header nav {
+    display: flex;
+    align-items: center;
+  }
+  header nav a {
+    color: #ccc;
+    font-size: 1rem;
+    margin-right: 1rem;
+    transition: color 0.2s;
+  }
+  header nav a.active,
+  header nav a:hover {
+    color: #fff;
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────────
+     Main Layout
+  ───────────────────────────────────────────────────────────────────────────── */
+  main {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  .profile-container {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────────
+     Profile Card
+  ───────────────────────────────────────────────────────────────────────────── */
+  .profile-card {
+    background: var(--card-bg);
+    width: 260px;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    text-align: center;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .profile-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  }
+  .profile-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 4px solid var(--primary);
+  }
+  .profile-card h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+  .profile-card p {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+  }
+  .profile-card button {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .profile-card button:hover {
+    background: darken(var(--primary), 10%);
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────────
+     Details Section
+  ───────────────────────────────────────────────────────────────────────────── */
+  .profile-details {
+    background: var(--card-bg);
+    flex: 1;
+    min-width: 300px;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  .profile-details h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: var(--primary);
+  }
+  .profile-details ul {
+    list-style: none;
+  }
+  .profile-details li {
+    margin-bottom: 0.75rem;
+  }
+  .profile-details li strong {
+    width: 100px;
+    display: inline-block;
+    color: var(--text-light);
+  }
+  .profile-details li ul {
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+  }
+  .profile-details li ul li {
+    margin-bottom: 0.4rem;
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────────
+     Modal Overlay & Content
+  ───────────────────────────────────────────────────────────────────────────── */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--overlay);
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  .modal.show {
+    display: flex;
+  }
+  .modal-content {
+    background: var(--card-bg);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 450px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    transform: scale(0.95);
+    animation: modal-in 0.2s forwards;
+  }
+  @keyframes modal-in {
+    to { transform: scale(1); }
+  }
+  .close-btn {
+    position: absolute;
+    top: 0.75rem; right: 1rem;
+    font-size: 1.5rem;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .close-btn:hover {
+    color: var(--text);
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────────
+     Form Styles
+  ───────────────────────────────────────────────────────────────────────────── */
+  form label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+  }
+  form input,
+  form textarea {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  form textarea {
+    resize: vertical;
+  }
+  form button {
+    margin-top: 1.5rem;
+    width: 100%;
+    padding: 0.75rem;
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  form button:hover {
+    background: #15803d;
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────────
+     Responsive Adjustments
+  ───────────────────────────────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .profile-container {
+      flex-direction: column;
+      align-items: center;
+    }
+    .profile-details {
+      width: 100%;
+    }
+  }

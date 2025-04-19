@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Sign Up</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f8f9fa; }
+    form { background: white; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; }
+    input, button { width: 100%; padding: 10px; margin: 10px 0; }
+    button { background: #007bff; color: white; border: none; border-radius: 5px; }
+  </style>
+</head>
+
+<h2 style="text-align: center;">STUDENT SIGN UP</h2>
+<form id="signupForm">
+  <input type="text" id="name" placeholder="Name" required>
+  <label for="college">Select College:</label>
+  <input list="colleges" name="college" id="college" placeholder="Choose your college" />
+  <datalist id="colleges">
+    <option value="Techno India Kolkata">
+    <option value="Techno Main Salt Lake">
+    <option value="Techno India">
+    <option value="Techno University">
+  </datalist>
+  <input type="text" id="studentId" placeholder="Student ID" required>
+  <input type="password" id="password" placeholder="Password" required>
+  <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+  <button type="submit">Sign Up</button>
+</form>
+<script>
+const allowedIds = ["2345678","3456789","4567890","123456789","876543"];
+
+  document.getElementById("signupForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const studentId = document.getElementById("studentId").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (!allowedIds.includes(studentId)) {
+      alert("Student ID not authorized.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    const existingUsers = JSON.parse(localStorage.getItem("students")) || [];
+    const alreadyExists = existingUsers.find(u => u.studentId === studentId);
+    if (alreadyExists) {
+        alert("Student ID already registered.");
+        return;
+      }
+  
+      existingUsers.push({ studentId, password });
+      localStorage.setItem("students", JSON.stringify(existingUsers));
+  
+      alert("Sign up successful!");
+      window.location.href = "login.html";
+    });
+  </script>
+  
+  </body>
+  </html>

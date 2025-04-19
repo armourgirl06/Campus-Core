@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Role Selection </title> <h1>CampusCore</h1>
+    <h3>CampusCore is a safe and private platform for students</h3>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef1f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .button-container {
+      margin: 20px;
+    }
+
+    button {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #studentBtn {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    #facultyBtn {
+      background-color: #2196F3;
+      color: white;
+    }
+
+    .action-button {
+      background-color: #555;
+      color: white;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="button-container">
+    <button id="studentBtn">Student</button>
+    <button id="facultyBtn">Faculty Administration</button>
+  </div>
+
+  <div id="studentActions" class="button-container hidden">
+   <a href="page2.html"><button class="action-button" onclick="alert('Student Sign Up')"> Student Sign Up</button></a>
+    <a href="login.html"><button class="action-button" onclick="alert('Student Log In')">Student Log In</button></a>
+    <button class="action-button" onclick="resetPage()">Back</button>
+  </div>
+
+  <div id="facultyActions" class="button-container hidden">
+   <a href="title.html"><button class="action-button" onclick="alert('Faculty Sign Up')">Faculty Sign Up</button></a>
+    <a href="title2.html"><button class="action-button" onclick="alert('Faculty Log In')">Faculty Log In</button></a>
+    <button class="action-button" onclick="resetPage()">Back</button>
+  </div>
+
+  <script>
+    const studentBtn = document.getElementById("studentBtn");
+    const facultyBtn = document.getElementById("facultyBtn");
+    const studentActions = document.getElementById("studentActions");
+    const facultyActions = document.getElementById("facultyActions");
+
+    studentBtn.addEventListener("click", () => {
+      studentBtn.classList.add("hidden");
+      facultyBtn.classList.add("hidden");
+      studentActions.classList.remove("hidden");
+    });
+
+    facultyBtn.addEventListener("click", () => {
+      studentBtn.classList.add("hidden");
+      facultyBtn.classList.add("hidden");
+      facultyActions.classList.remove("hidden");
+    });
+
+    function resetPage() {
+      studentBtn.classList.remove("hidden");
+      facultyBtn.classList.remove("hidden");
+      studentActions.classList.add("hidden");
+      facultyActions.classList.add("hidden");
+    }
+  </script>
+</body>
+</html>

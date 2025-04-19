@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Post Notice</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    textarea { width: 100%; height: 100px; margin-bottom: 10px; }
+    button { padding: 10px 20px; }
+    .entry { background: #eef; padding: 10px; margin-top: 10px; }
+    .timestamp { font-size: 0.8em; color: gray; }
+  </style>
+</head>
+<body>
+  <h2>Post Notice</h2>
+  <textarea id="noticeText" placeholder="Enter notice..."></textarea><br />
+  <button onclick="addEntry()">Post Notice</button>
+  <div id="noticeList"></div>
+
+  <script>
+    const key = "noticeEntries";
+    const list = document.getElementById("noticeList");
+
+    function loadEntries() {
+      const data = JSON.parse(localStorage.getItem(key)) || [];
+      list.innerHTML = '';
+      data.forEach(entry => {
+        const div = document.createElement("div");
+        div.className = "entry";
+        div.innerHTML = `<div>${entry.text}</div><div class="timestamp">${entry.time}</div>`;
+        list.prepend(div);
+      });
+    }
+
+    function addEntry() {
+      const text = document.getElementById("noticeText").value.trim();
+      if (!text) return;
+      const time = new Date().toLocaleString();
+      const entry = { text, time };
+      const existing = JSON.parse(localStorage.getItem(key)) || [];
+      existing.push(entry);
+      localStorage.setItem(key, JSON.stringify(existing));
+      document.getElementById("noticeText").value = '';
+      loadEntries();
+    }
+
+    window.onload = loadEntries;
+  </script>
+</body>
+</html>

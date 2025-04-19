@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Attendance Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 50px;
+      margin: 0;
+    }
+    .calculator {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 350px;
+      width: 100%;
+    }
+    .calculator h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .calculator label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .calculator input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .calculator button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .calculator button:hover {
+      background: #2563eb;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #eef2ff;
+      border-left: 4px solid #3b82f6;
+      border-radius: 4px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <h2>Attendance Calculator</h2>
+    <label for="total">Total Classes Held</label>
+    <input type="number" id="total" min="0" value="0">
+
+    <label for="attended">Classes Attended</label>
+    <input type="number" id="attended" min="0" value="0">
+
+    <label for="required">Required %</label>
+    <input type="number" id="required" min="0" max="100" value="75">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="output" class="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      const t = parseInt(document.getElementById('total').value, 10);
+      const a = parseInt(document.getElementById('attended').value, 10);
+      const reqP = parseFloat(document.getElementById('required').value) / 100;
+
+      const out = document.getElementById('output');
+      out.style.display = 'block';
+
+      if (isNaN(t) || isNaN(a) || isNaN(reqP) || t < 0 || a < 0 || reqP < 0) {
+        out.textContent = 'Please enter valid non-negative numbers.';
+        return;
+      }
+      if (a > t) {
+        out.textContent = 'Attended classes cannot exceed total classes.';
+        return;
+      }
+
+      const currentP = t === 0 ? 0 : (a / t) * 100;
+      let message = Your current attendance: ${currentP.toFixed(2)}%.;
+
+      if (currentP / 100 < reqP) {
+        // Calculate classes needed to meet requirement:
+        // (a + n) / (t + n) >= reqP  ⇒  n >= (reqP*t - a) / (1 - reqP)
+        const needed = Math.ceil((reqP * t - a) / (1 - reqP));
+        message += ` You need to attend at least ${needed} more class${needed === 1 ? '' : 'es'} (without missing any) to reach ${ (reqP*100).toFixed(0) }%.`;
+      } else if (currentP / 100 > reqP) {
+        // Calculate how many you can miss:
+        // a / (t + m) >= reqP  ⇒  m <= (a/reqP) - t
+        const maxMiss = Math.floor(a / reqP - t);
+        if (maxMiss > 0) {
+          message += ` You can afford to miss up to ${maxMiss} class${maxMiss === 1 ? '' : 'es'} and still stay at or above ${ (reqP*100).toFixed(0) }%.`;
+        } else {
+          message += ` You’re just at the threshold—avoid missing any more classes.`;
+        }
+      } else {
+        message += ` You’re exactly at the required ${ (reqP*100).toFixed(0) }%.`;
+      }
+
+      out.textContent = message;
+    }
+  </script>
+
+</body>
+</html>

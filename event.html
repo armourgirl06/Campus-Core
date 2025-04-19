@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Post Event</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    textarea { width: 100%; height: 100px; margin-bottom: 10px; }
+    button { padding: 10px 20px; }
+    .entry { background: #eef; padding: 10px; margin-top: 10px; }
+    .timestamp { font-size: 0.8em; color: gray; }
+  </style>
+</head>
+<body>
+  <h2>Post Event</h2>
+  <textarea id="eventText" placeholder="Enter event details..."></textarea><br />
+  <button onclick="addEntry()">Post Event</button>
+  <div id="eventList"></div>
+
+  <script>
+    const key = "eventEntries";
+    const list = document.getElementById("eventList");
+
+    function loadEntries() {
+      const data = JSON.parse(localStorage.getItem(key)) || [];
+      list.innerHTML = '';
+      data.forEach(entry => {
+        const div = document.createElement("div");
+        div.className = "entry";
+        div.innerHTML = `<div>${entry.text}</div><div class="timestamp">${entry.time}</div>`;
+        list.prepend(div);
+      });
+    }
+
+    function addEntry() {
+      const text = document.getElementById("eventText").value.trim();
+      if (!text) return;
+      const time = new Date().toLocaleString();
+      const entry = { text, time };
+      const existing = JSON.parse(localStorage.getItem(key)) || [];
+      existing.push(entry);
+      localStorage.setItem(key, JSON.stringify(existing));
+      document.getElementById("eventText").value = '';
+      loadEntries();
+    }
+
+    window.onload = loadEntries;
+  </script>
+</body>
+</html>

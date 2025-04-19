@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Campus Core</title>
+  <link rel="stylesheet" href="com.css">
+</head>
+<body>
+  <!-- Profile Button -->
+  <a href="h.html" class="btn-profile">View Profile</a>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Campus Core</h2>
+      <ul>
+        <li><a href="project sub.html">Project Submission</a></li>
+        <li><a href="index2.html">Faculty Posts</a></li>
+        <li><a href="attendence cal.html">Attendance Calculator</a></li>
+      </ul>
+    </div>
+
+    <!-- Main content -->
+    <div class="main">
+      <div id="dashboard" class="section active">
+        <h2>Welcome to CampusCore!</h2>
+        <p>Stay connected with your college community.</p>
+      </div>
+
+      <div id="announcements" class="section">
+        <h2>Faculty Posts</h2>
+        <ul id="announcementList">
+          <li>Exam form submission ends this Friday!</li>
+          <li>Annual fest registrations are open.</li>
+        </ul>
+      </div>
+
+      <div id="chat" class="section">
+        <h2>Student Chat Room</h2>
+        <div class="chat-box" id="chatBox"></div>
+        <input type="text" id="username" placeholder="Your name">
+        <input type="text" id="message" placeholder="Type a message" onkeydown="handleKey(event)">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="com.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Profile</title>
+  <link rel="stylesheet" href="h.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">🏠 Home</a>
+      <span>│</span>
+      <a href="profile.html" class="active">👤 Profile</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="profile-container">
+      <!-- Profile Card -->
+      <div class="profile-card">
+        <img id="profilePic" src="https://via.placeholder.com/120" alt="Profile Picture">
+        <h2 id="fullName">Loading…</h2>
+        <p id="dept">—</p>
+        <button id="editBtn">Edit Profile</button>
+      </div>
+
+      <!-- Details Section -->
+      <div class="profile-details">
+        <h3>Details</h3>
+        <ul>
+          <li><strong>Student ID:</strong> <span id="studentId">—</span></li>
+          <li><strong>Email:</strong>      <span id="email">—</span></li>
+          <li><strong>Year:</strong>       <span id="year">—</span></li>
+          <li><strong>Bio:</strong>        <span id="bio">—</span></li>
+          <li><strong>Courses:</strong>
+            <ul id="coursesList">
+              <li>—</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- Edit Profile Modal -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <h2>Edit Profile</h2>
+      <form id="editForm">
+        <label>Name</label>
+        <input type="text" id="inputName" required>
+
+        <label>Department</label>
+        <input type="text" id="inputDept" required>
+
+        <label>Student ID</label>
+        <input type="text" id="inputId" required>
+
+        <label>Email</label>
+        <input type="email" id="inputEmail" required>
+
+        <label>Year</label>
+        <input type="text" id="inputYear" required>
+
+        <label>Bio</label>
+        <textarea id="inputBio" rows="3"></textarea>
+
+        <label>Courses (comma separated)</label>
+        <input type="text" id="inputCourses">
+
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="profile.js"></script>
+</body>
+</html>
