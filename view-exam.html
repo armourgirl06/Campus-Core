@@ -1,11 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>View Exam Schedules</title>
   <style>
-    body { font-family: Arial; padding: 20px; background: #fff0f5; }
-    .entry { background: #fff; padding: 10px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 4px #ccc; }
-    .timestamp { font-size: 0.8em; color: gray; margin-top: 5px; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      background: linear-gradient(-45deg, #0f2027, #61afc9, #92c3d8, #0f2027);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h2 {
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    #fileList {
+      width: 90%;
+      max-width: 700px;
+    }
+
+    .entry {
+      background: #ffffff;
+      border-left: 6px solid #61afc9;
+      padding: 16px 20px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .entry:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .entry a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #0f2027;
+      font-size: 1.1em;
+      word-break: break-word;
+    }
+
+    .entry a:hover {
+      color: #0077a6;
+    }
+
+    .timestamp {
+      font-size: 0.85em;
+      color: #555;
+      margin-top: 6px;
+    }
   </style>
 </head>
 <body>
@@ -24,7 +84,8 @@
         div.className = "entry";
         div.innerHTML = `
           <a href="${entry.url}" download="${entry.name}">${entry.name}</a>
-          <div class="timestamp">${entry.time}</div>`;
+          <div class="timestamp">${entry.time}</div>
+        `;
         list.appendChild(div);
       });
     }

@@ -4,61 +4,117 @@
   <meta charset="UTF-8">
   <title>Student Attendance Calculator</title>
   <style>
+    :root {
+      --primary-color: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg-color: #f0f2f5;
+      --white: #fff;
+      --input-bg: #f9fafb;
+      --result-bg: #eef2ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f0f2f5;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-color);
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding-top: 50px;
+      padding: 50px 20px;
       margin: 0;
+      animation: fadeIn 0.6s ease;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .calculator {
-      background: #fff;
-      padding: 20px 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      max-width: 350px;
+      background: var(--white);
+      padding: 30px 25px;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
       width: 100%;
+      transition: transform 0.3s ease;
     }
+
+    .calculator:hover {
+      transform: translateY(-2px);
+    }
+
     .calculator h2 {
       text-align: center;
-      margin-bottom: 20px;
-      color: #333;
+      margin-bottom: 25px;
+      color: var(--primary-color);
+      font-size: 24px;
     }
+
     .calculator label {
       display: block;
-      margin-top: 10px;
-      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
     }
+
     .calculator input {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
+      padding: 10px;
+      background: var(--input-bg);
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: border-color 0.3s;
     }
+
+    .calculator input:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+
     .calculator button {
       width: 100%;
-      padding: 10px;
-      margin-top: 20px;
-      background: #3b82f6;
+      padding: 12px;
+      margin-top: 25px;
+      background: var(--primary-color);
       color: white;
       border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      border-radius: 6px;
       font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
     }
+
     .calculator button:hover {
-      background: #2563eb;
+      background: var(--primary-hover);
+      transform: translateY(-1px);
     }
+
     .result {
       margin-top: 20px;
-      padding: 15px;
-      background: #eef2ff;
-      border-left: 4px solid #3b82f6;
-      border-radius: 4px;
+      padding: 15px 20px;
+      background: var(--result-bg);
+      border-left: 4px solid var(--primary-color);
+      border-radius: 6px;
       color: #333;
+      animation: slideFadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes slideFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 500px) {
+      .calculator {
+        padding: 25px 20px;
+      }
     }
   </style>
 </head>
@@ -89,34 +145,30 @@
       const out = document.getElementById('output');
       out.style.display = 'block';
 
-      if (isNaN(t) || isNaN(a) || isNaN(reqP) || t < 0 || a < 0 || reqP < 0) {
-        out.textContent = 'Please enter valid non-negative numbers.';
+      if (isNaN(t) || isNaN(a) || isNaN(reqP) || t < 0 || a < 0 || reqP < 0 || reqP > 1) {
+        out.textContent = '⚠️ Please enter valid non-negative numbers.';
         return;
       }
       if (a > t) {
-        out.textContent = 'Attended classes cannot exceed total classes.';
+        out.textContent = '⚠️ Attended classes cannot exceed total classes.';
         return;
       }
 
       const currentP = t === 0 ? 0 : (a / t) * 100;
-      let message = Your current attendance: ${currentP.toFixed(2)}%.;
+      let message = `📊 Your current attendance: ${currentP.toFixed(2)}%.`;
 
       if (currentP / 100 < reqP) {
-        // Calculate classes needed to meet requirement:
-        // (a + n) / (t + n) >= reqP  ⇒  n >= (reqP*t - a) / (1 - reqP)
         const needed = Math.ceil((reqP * t - a) / (1 - reqP));
-        message += ` You need to attend at least ${needed} more class${needed === 1 ? '' : 'es'} (without missing any) to reach ${ (reqP*100).toFixed(0) }%.`;
+        message += `\n📈 You need to attend at least ${needed} more class${needed === 1 ? '' : 'es'} to reach ${ (reqP*100).toFixed(0) }%.`;
       } else if (currentP / 100 > reqP) {
-        // Calculate how many you can miss:
-        // a / (t + m) >= reqP  ⇒  m <= (a/reqP) - t
         const maxMiss = Math.floor(a / reqP - t);
         if (maxMiss > 0) {
-          message += ` You can afford to miss up to ${maxMiss} class${maxMiss === 1 ? '' : 'es'} and still stay at or above ${ (reqP*100).toFixed(0) }%.`;
+          message += `\n🟢 You can miss up to ${maxMiss} class${maxMiss === 1 ? '' : 'es'} and still maintain ${ (reqP*100).toFixed(0) }%.`;
         } else {
-          message += ` You’re just at the threshold—avoid missing any more classes.`;
+          message += `\n⚠️ You’re just at the threshold—avoid missing any more classes.`;
         }
       } else {
-        message += ` You’re exactly at the required ${ (reqP*100).toFixed(0) }%.`;
+        message += `\n✅ You’re exactly at the required ${ (reqP*100).toFixed(0) }%.`;
       }
 
       out.textContent = message;

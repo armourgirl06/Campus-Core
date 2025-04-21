@@ -4,49 +4,221 @@
   <meta charset="UTF-8">
   <title>Campus Core</title>
   <link rel="stylesheet" href="com.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #2c5364);
+      color: #fff;
+      display: flex;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .sidebar {
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      width: 220px;
+      padding: 30px 20px;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+    }
+
+    .sidebar h2 {
+      color: #00d2ff;
+      font-size: 26px;
+      margin-bottom: 25px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: #fff;
+      display: block;
+      padding: 10px 15px;
+      margin: 8px 0;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
+      transition: 0.3s;
+    }
+
+    .sidebar ul li a:hover {
+      background: #00d2ff;
+      color: #000;
+      transform: scale(1.05);
+    }
+
+    .main {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .section h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .avatar-circle {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #00d2ff;
+      color: #000;
+      font-weight: bold;
+      font-size: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .profile-tags {
+      position: absolute;
+      top: 120px;
+      right: 30px;
+    }
+
+    .tag {
+      background: linear-gradient(to right, #00d2ff, #3a7bd5);
+      padding: 6px 14px;
+      border-radius: 20px;
+      color: #fff;
+      font-size: 14px;
+      margin: 4px;
+      display: inline-block;
+    }
+
+    .view-profile-btn {
+      margin-top: 50px;
+      background: linear-gradient(to right, #f7971e, #ffd200);
+      color: #000;
+      padding: 12px 25px;
+      font-weight: bold;
+      border-radius: 30px;
+      width: fit-content;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .view-profile-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(255, 255, 0, 0.3);
+    }
+
+    .profile-summary {
+      margin-top: 40px;
+      padding: 25px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      max-width: 350px;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      background: #fff;
+      color: #333;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 15px;
+    }
+
+    .profile-summary h3 {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .profile-summary p {
+      text-align: center;
+      color: #ddd;
+      margin-bottom: 8px;
+    }
+
+    .profile-summary button {
+      background: #00d2ff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    .profile-summary button:hover {
+      background: #00b0d4;
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
-  <!-- Profile Button -->
-  <a href="h.html" class="btn-profile">View Profile</a>
-
   <div class="container">
     <!-- Sidebar -->
     <div class="sidebar">
       <h2>Campus Core</h2>
       <ul>
-        <li><a href="project sub.html">Project Submission</a></li>
-        <li><a href="index2.html">Faculty Posts</a></li>
-        <li><a href="attendence cal.html">Attendance Calculator</a></li>
+        <li><a href="project sub.html">📁 Project Submission</a></li>
+        <li><a href="view.html">📣 Faculty Posts</a></li>
+        <li><a href="attendence cal.html">📊 Attendance Calculator</a></li>
+        <li><a href="complain.html">🚨 Complain</a></li>
+        <li><a href="feed.html">📝 Memo Pad</a></li>
       </ul>
     </div>
 
-    <!-- Main content -->
+    <!-- Main Section -->
     <div class="main">
       <div id="dashboard" class="section active">
-        <h2>Welcome to CampusCore!</h2>
-        <p>Stay connected with your college community.</p>
+        <h2>👋 Welcome to CampusCore!</h2>
+        <p>Stay connected with your college community in style 🎉</p>
       </div>
 
-      <div id="announcements" class="section">
-        <h2>Faculty Posts</h2>
-        <ul id="announcementList">
-          <li>Exam form submission ends this Friday!</li>
-          <li>Annual fest registrations are open.</li>
-        </ul>
+      
+        
       </div>
 
-      <div id="chat" class="section">
-        <h2>Student Chat Room</h2>
-        <div class="chat-box" id="chatBox"></div>
-        <input type="text" id="username" placeholder="Your name">
-        <input type="text" id="message" placeholder="Type a message" onkeydown="handleKey(event)">
-        <button onclick="sendMessage()">Send</button>
+      <div class="profile-tags">
+        <span class="tag">🎓 Student</span>
+        <span class="tag">💬 Active</span>
+        <span class="tag">🌟 Enthusiast</span>
       </div>
+
+      
+
+    
     </div>
   </div>
 
-  <script src="com.js"></script>
-  <script src="script.js"></script>
+  
 </body>
 </html>
-

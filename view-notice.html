@@ -1,11 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>View Notices</title>
   <style>
-    body { font-family: Arial; padding: 20px; background: #f0f8ff; }
-    .entry { background: #fff; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 4px #ccc; }
-    .timestamp { font-size: 0.8em; color: gray; margin-top: 5px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(-45deg, #0f2027, #5a90a2, #5088a0, #0f2027);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h2 {
+      color: #ffffff;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    #noticeList {
+      width: 90%;
+      max-width: 700px;
+    }
+
+    .entry {
+      background: rgba(255, 255, 255, 0.95);
+      border-left: 6px solid #5a90a2;
+      padding: 16px 20px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease;
+    }
+
+    .entry:hover {
+      transform: translateY(-3px);
+    }
+
+    .entry div:first-child {
+      font-size: 1rem;
+      color: #1a1a1a;
+    }
+
+    .timestamp {
+      font-size: 0.85em;
+      color: #555;
+      margin-top: 8px;
+    }
   </style>
 </head>
 <body>
@@ -22,7 +74,10 @@
       data.reverse().forEach(entry => {
         const div = document.createElement("div");
         div.className = "entry";
-        div.innerHTML = `<div>${entry.text}</div><div class="timestamp">${entry.time}</div>`;
+        div.innerHTML = `
+          <div>${entry.text}</div>
+          <div class="timestamp">${entry.time}</div>
+        `;
         list.appendChild(div);
       });
     }

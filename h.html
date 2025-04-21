@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="h.css">
 </head>
 <body>
+  
+  
   <header>
     <nav>
       <a href="index.html">🏠 Home</a>
@@ -15,14 +17,15 @@
   </header>
 
   <main>
-    <div class="profile-container">
-      <!-- Profile Card -->
-      <div class="profile-card">
-        <img id="profilePic" src="https://via.placeholder.com/120" alt="Profile Picture">
-        <h2 id="fullName">Loading…</h2>
-        <p id="dept">—</p>
-        <button id="editBtn">Edit Profile</button>
-      </div>
+  <!-- Replace profile image and add file input -->
+<div class="profile-card">
+  <img id="profilePic" src="https://via.placeholder.com/120" alt="Profile Picture">
+  <input type="file" id="picUpload" accept="image/*" style="margin: 10px 0;">
+  <h2 id="fullName">Loading…</h2>
+  <p id="dept">—</p>
+  <button id="editBtn">Edit Profile</button>
+</div>
+
 
       <!-- Details Section -->
       <div class="profile-details">
@@ -73,7 +76,13 @@
       </form>
     </div>
   </div>
+  <form>
+    <label>Profile Picture</label>
+<input type="file" id="inputPic" accept="image/*">
 
+  </form>
+ 
+  
   <script src="profile.js"></script>
 </body>
 </html>

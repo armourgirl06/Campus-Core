@@ -1,38 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Upload Timetable</title>
   <style>
-    body { font-family: Arial; padding: 20px; }
-    input[type="file"] { margin-bottom: 10px; }
-    button { padding: 10px 20px; }
-    .entry { background: #eef; padding: 10px; margin-top: 10px; }
-    .timestamp { font-size: 0.8em; color: gray; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: linear-gradient(-45deg, #0f2027, #5a90a2, #5088a0, #0f2027);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      gap: 20px;
+    }
+
+    h2 {
+      color: rgb(253, 253, 253);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    input[type="file"] {
+      width: 60%;
+      padding: 12px;
+      border-radius: 5px;
+      border: none;
+      background: #f1f1f1;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+
+    button {
+      padding: 12px 24px;
+      background: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    button:hover {
+      background: #1976d2;
+      transform: scale(1.05);
+    }
+
+    .entry {
+      background: #ffffff;
+      border-left: 5px solid #2196f3;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 60%;
+      max-width: 600px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .details {
+      flex-grow: 1;
+    }
+
+    .timestamp {
+      font-size: 0.8em;
+      color: gray;
+    }
+
+    .delete-btn {
+      background: #e74c3c;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #c0392b;
+    }
+
+    a {
+      color: #2196f3;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #1976d2;
+    }
   </style>
 </head>
 <body>
+
   <h2>Upload Timetable</h2>
+  
+  <!-- File upload input -->
   <input type="file" id="fileInput" accept=".pdf,.zip" />
+
+  <!-- Upload button -->
   <button onclick="uploadFile()">Upload</button>
+
+  <!-- File list display -->
   <div id="fileList"></div>
 
   <script>
     const key = "timetableFiles";
     const fileList = document.getElementById("fileList");
 
+    // Function to load the uploaded files from local storage
     function loadFiles() {
       const data = JSON.parse(localStorage.getItem(key)) || [];
       fileList.innerHTML = '';
-      data.forEach(entry => {
+      data.forEach((entry, index) => {
         const div = document.createElement("div");
         div.className = "entry";
         div.innerHTML = `
-          <a href="${entry.url}" download="${entry.name}">${entry.name}</a>
-          <div class="timestamp">${entry.time}</div>`;
+          <div class="details">
+            <a href="${entry.url}" download="${entry.name}">${entry.name}</a>
+            <div class="timestamp">${entry.time}</div>
+          </div>
+          <button class="delete-btn" onclick="deleteFile(${index})">Delete</button>
+        `;
         fileList.prepend(div);
       });
     }
 
+    // Function to handle file upload
     function uploadFile() {
       const fileInput = document.getElementById("fileInput");
       const file = fileInput.files[0];
@@ -48,13 +150,24 @@
         existing.push(entry);
         localStorage.setItem(key, JSON.stringify(existing));
         loadFiles();
-        fileInput.value = '';
+        fileInput.value = ''; // Reset file input
       };
 
       reader.readAsArrayBuffer(file);
     }
 
-    window.onload = loadFiles;
+    // Function to delete a file
+    function deleteFile(index) {
+      const data = JSON.parse(localStorage.getItem(key)) || [];
+      if (index >= 0 && index < data.length) {
+        data.splice(index, 1);
+        localStorage.setItem(key, JSON.stringify(data));
+        loadFiles();
+      }
+    }
+
+    window.onload = loadFiles; // Load files when the page loads
   </script>
+
 </body>
 </html>

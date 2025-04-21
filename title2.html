@@ -1,17 +1,112 @@
 <!DOCTYPE html>
-<html>
-    <head>
-<link rel="stylesheet" href="title2.css">
-    </head>
-    <body>
-    <h2 STYLE="TEXT-ALIGN: CENTER;">FACULTY ADMINISTRATION LOG IN</h2>
-    <div>
-    <form id="loginForm">
-        <p>
-      <input type="email" id="loginEmail" placeholder="Email" required></p>
-      <p></p><input type="password" id="loginPassword" placeholder="Password" required></p>
-     <p></p> <a href="index.html"><submit>Log In</button></p></submit></a>
-     </form></body></div>
-    <script src="title2.js"></script>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Login</title>
+  <link rel="stylesheet" href="title.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(-45deg, #ffffff, #5a90a2, #5088a0, #0f2027);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      margin-top: 50px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    form {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 400px;
+      margin: 40px auto;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    input, button {
+      width: 100%;
+      margin: 12px 0;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    input:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #0056b3;
+      transform: scale(1.02);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>FACULTY LOGIN</h1>
+
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit">Log In</button>
+  </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("loginForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        const users = JSON.parse(localStorage.getItem("faculty administration")) || [];
+        const user = users.find(u => u.email === email && u.password === password);
+
+        if (user) {
+          alert("Login successful!");
+          localStorage.setItem("currentFaculty", JSON.stringify(user));
+          window.location.href = "edit.html";
+        } else {
+          alert("Invalid email or password.");
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
+
+

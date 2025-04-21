@@ -7,38 +7,153 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      background: #f9f9f9;
+      background: linear-gradient(-45deg, #0f2027, #5a90a2, #5088a0, #0f2027);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      gap: 30px;
     }
+
+    h1 {
+      color: white;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    #noticeForm {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
+    #noticeInput {
+      width: 60%;
+      padding: 12px;
+      font-size: 1.1em;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      background: #f1f1f1;
+    }
+
+    #postBtn {
+      padding: 12px 24px;
+      background: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    #postBtn:hover {
+      background: #1976d2;
+      transform: scale(1.05);
+    }
+
     .notice {
-      background: #fff;
+      background: #ffffff;
       border-left: 5px solid #2196f3;
-      padding: 10px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 600px;
     }
+
+    .notice .text {
+      flex-grow: 1;
+    }
+
     .time {
       font-size: 0.8em;
-      color: #555;
-      margin-top: 5px;
+      color: gray;
+      margin-top: 4px;
+    }
+
+    .delete-btn {
+      background: #e74c3c;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #c0392b;
     }
   </style>
 </head>
 <body>
   <h1>Student Notice Board</h1>
+
+  <!-- Add Notice Form -->
+  <div id="noticeForm">
+    <input type="text" id="noticeInput" placeholder="Type your notice here..." />
+    <button id="postBtn" onclick="postNotice()">Post Notice</button>
+  </div>
+
   <div id="noticeContainer"></div>
 
   <script>
+    const STORAGE_KEY = "noticeEntries";
+
     function loadNotices() {
-      const notices = JSON.parse(localStorage.getItem("noticeEntries")) || [];
+      const notices = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
       const container = document.getElementById("noticeContainer");
       container.innerHTML = '';
 
-      notices.reverse().forEach(entry => {
+      notices.forEach((entry, index) => {
         const div = document.createElement("div");
         div.className = "notice";
-        div.innerHTML = <div>${entry.text}</div><div class="time">${entry.time}</div>;
+        div.innerHTML = `
+          <div class="text">
+            <div>${entry.text}</div>
+            <div class="time">${entry.time}</div>
+          </div>
+          <button class="delete-btn" onclick="deleteNotice(${index})">Delete</button>
+        `;
         container.appendChild(div);
       });
+    }
+
+    function postNotice() {
+      const input = document.getElementById("noticeInput");
+      const text = input.value.trim();
+
+      if (!text) {
+        alert("Please enter a notice.");
+        return;
+      }
+
+      const time = new Date().toLocaleString();
+      const newEntry = { text, time };
+      const notices = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+      notices.push(newEntry);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(notices));
+      input.value = '';
+      loadNotices();
+    }
+
+    function deleteNotice(index) {
+      const notices = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      if (index >= 0 && index < notices.length) {
+        notices.splice(index, 1);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(notices));
+        loadNotices();
+      }
     }
 
     window.onload = loadNotices;

@@ -1,58 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>College Portal</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      gap: 20px;
-      background: #f5f5f5;
+  <meta charset="UTF-8">
+  <title>Role Selection </title>
+  <!-- Bubble Glassmorphism Drops -->
+<div class="bubble-drop bubble1"></div>
+<div class="bubble-drop bubble2"></div>
+ <h1>CampusCore</h1>
+    <h3>CampusCore is a safe and private platform for students </h3>
+   <style> body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(-45deg, #0f2027, #5a90a2, #1b5e7a, #0f2027);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    animation: fadeIn 1.2s ease-in;
+    position: relative;
+    color: #e0e6ed;
+  }
+  
+  /* Smooth fade-in */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Button section */
+  .button-container {
+    margin: 20px;
+    z-index: 1;
+  }
+  
+  /* All buttons */
+  button {
+    padding: 14px 32px;
+    margin: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.4s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    background-color: #1a2a4f;
+    color: #e0e6ed;
+  }
+  
+  button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+  }
+  
+  /* Specific buttons */
+  #studentBtn {
+    background-color: #4070f4;
+  }
+  #studentBtn:hover {
+    background-color: #1b2e6d;
+  }
+  
+  #facultyBtn {
+    background-color: #4070f4;
+  }
+  #facultyBtn:hover {
+    background-color: #325bcc;
+  }
+  
+  .action-button {
+    background-color: #4070f4;;
+  }
+  .action-button:hover {
+    background-color: #1c2a3a;
+  }
+  
+  /* Hide utility */
+  .hidden {
+    display: none;
+  }
+  
+  .bubble-drop {
+  position: absolute;
+  border-radius: 50%;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: floatDrop 15s infinite ease-in-out;
+  z-index: 0;
+}
+
+.bubble1 {
+  width: 180px;
+  height: 180px;
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.bubble2 {
+  width: 150px;
+  height: 150px;
+  top: 60%;
+  right: 10%;
+  animation-delay: 4s;
+}
+
+@keyframes floatDrop {
+  0% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-30px) scale(1.05);
+  }
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+}
+
+  h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #ffffff;
+  letter-spacing: 1.5px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  animation: slideInTop 1.2s ease-out;
+}
+
+h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #d1e1f0;
+  text-align: center;
+  max-width: 600px;
+  line-height: 1.5;
+  animation: fadeInUp 1.5s ease-in;
+}
+
+/* Animations */
+@keyframes slideInTop {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* JELLYFISH ANIMATION */
+.jellyfish {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+  width: 60px;
+  height: 100px;
+  z-index: 0;
+  animation: floatJelly 6s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+.jelly-body {
+  width: 60px;
+  height: 40px;
+  background: radial-gradient(circle at 30% 30%, #aee3f9, #3d6aa2);
+  border-radius: 50% 50% 40% 40%;
+  box-shadow: inset -2px -3px 6px rgba(255,255,255,0.2);
+  position: relative;
+}
+
+.tentacle {
+  position: absolute;
+  bottom: 0;
+  width: 4px;
+  height: 40px;
+  background: linear-gradient(to bottom, #aee3f9 0%, #3d6aa2 100%);
+  border-radius: 2px;
+  animation: wave 2s ease-in-out infinite;
+}
+
+.t1 { left: 15px; animation-delay: 0s; }
+.t2 { left: 28px; animation-delay: 0.3s; }
+.t3 { left: 42px; animation-delay: 0.6s; }
+
+@keyframes floatJelly {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+.bubble-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -50px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: rise 12s infinite ease-in;
+}
+
+.bubble.small {
+  width: 10px;
+  height: 10px;
+  left: 10%;
+  animation-duration: 10s;
+}
+
+.bubble.medium {
+  width: 80px;
+  height: 70px;
+  left: 40%;
+  animation-duration: 12s;
+}
+
+.bubble.tiny {
+  width: 6px;
+  height: 6px;
+  left: 70%;
+  animation-duration: 14s;
+}
+
+.bubble.delay1 { animation-delay: 0s; left: 20%; }
+.bubble.delay2 { animation-delay: 4s; left: 50%; }
+.bubble.delay3 { animation-delay: 6s; left: 80%; }
+
+@keyframes rise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-100vh) scale(1.2);
+    opacity: 0;
+  }
+}
+.submarine {
+  position: absolute;
+  bottom: 80px;
+  left: -200px;
+  width: 150px;
+  height: 60px;
+  z-index: 2;
+  animation: moveSub 40s linear infinite;
+}
+
+@keyframes moveSub {
+  0% {
+    left: -200px;
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    left: 110%;
+    transform: translateY(0px);
+  }
+}
+
+.sub-body {
+  background-color: #2c3e50;
+  width: 150px;
+  height: 60px;
+  border-radius: 30px;
+  position: relative;
+}
+
+.window {
+  width: 20px;
+  height: 20px;
+  background-color: #b0d4f1;
+  border-radius: 50%;
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  box-shadow: 0 0 5px #9ed5ff;
+}
+
+.light {
+  width: 8px;
+  height: 8px;
+  background: #fffa88;
+  border-radius: 50%;
+  position: absolute;
+  right: 20px;
+  top: 25px;
+  box-shadow: 0 0 6px 3px #fff68f;
+}
+
+.periscope {
+  width: 10px;
+  height: 30px;
+  background-color: #34495e;
+  position: absolute;
+  top: -25px;
+  left: 50px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+
+
+@keyframes spin {
+  0% { transform: rotate(0); }
+  100% { transform: rotate(360deg); }
+}
+
+    </style></head>
+  <body> 
+    <div class="submarine">
+      <div class="sub-body">
+        <div class="window"></div>
+        <div class="light"></div>
+      </div>
+      <div class="periscope"></div>
+    
+    </div>
+    
+    <div class="bubble-wrapper">
+      <div class="bubble small"></div>
+      <div class="bubble medium"></div>
+      <div class="bubble tiny"></div>
+      <div class="bubble small delay1"></div>
+      <div class="bubble medium delay2"></div>
+      <div class="bubble tiny delay3"></div>
+    </div>
+    
+    <!-- Bubble Glassmorphism Drops -->
+<div class="bubble-drop bubble1"></div>
+<div class="bubble-drop bubble2"></div>
+<div class="jellyfish">
+  <div class="jelly-body"></div>
+  <div class="tentacle t1"></div>
+  <div class="tentacle t2"></div>
+  <div class="tentacle t3"></div>
+</div>
+
+
+  <div class="button-container">
+    <button id="studentBtn">Student</button>
+    <button id="facultyBtn">Faculty Administration</button>
+  </div>
+
+  <div id="studentActions" class="button-container hidden">
+   <a href="page2.html"><button class="action-button" > Student Sign Up</button></a>
+    <a href="login.html"><button class="action-button">Student Log In</button></a>
+    <button class="action-button" onclick="resetPage()">Back</button>
+  </div>
+
+  <div id="facultyActions" class="button-container hidden">
+   <a href="title.html"><button class="action-button">Faculty Sign Up</button></a>
+    <a href="title2.html"><button class="action-button">Faculty Log In</button></a>
+    <button class="action-button" onclick="resetPage()">Back</button>
+  </div>
+
+  <script>
+    const studentBtn = document.getElementById("studentBtn");
+    const facultyBtn = document.getElementById("facultyBtn");
+    const studentActions = document.getElementById("studentActions");
+    const facultyActions = document.getElementById("facultyActions");
+
+    studentBtn.addEventListener("click", () => {
+      studentBtn.classList.add("hidden");
+      facultyBtn.classList.add("hidden");
+      studentActions.classList.remove("hidden");
+    });
+
+    facultyBtn.addEventListener("click", () => {
+      studentBtn.classList.add("hidden");
+      facultyBtn.classList.add("hidden");
+      facultyActions.classList.remove("hidden");
+    });
+
+    function resetPage() {
+      studentBtn.classList.remove("hidden");
+      facultyBtn.classList.remove("hidden");
+      studentActions.classList.add("hidden");
+      facultyActions.classList.add("hidden");
     }
-    .card {
-      width: 150px;
-      height: 150px;
-      background: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      text-align: center;
-      cursor: pointer;
-      text-decoration: none;
-      color: black;
-    }
-    .card img {
-      width: 50px;
-      height: 50px;
-      margin-bottom: 10px;
-    }
-  </style>
-</head>
-<body>
-  <a class="card" href="notice.html">
-    <img src="notice-icon.png" alt="Notice" />
-    <div>Notice</div>
-  </a>
-  <a class="card" href="timetable.html">
-    <img src="timetable-icon.png" alt="Timetable" />
-    <div>Timetable</div>
-  </a>
-  <a class="card" href="exam.html">
-    <img src="exam-icon.png" alt="Exam" />
-    <div>Exam Schedule</div>
-  </a>
-  <a class="card" href="event.html">
-    <img src="event-icon.png" alt="Event" />
-    <div>Event</div>
-  </a>
+  </script>
 </body>
 </html>

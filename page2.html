@@ -1,65 +1,172 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Student Sign Up</title>
   <style>
-    body { font-family: Arial; padding: 20px; background: #f8f9fa; }
-    form { background: white; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; }
-    input, button { width: 100%; padding: 10px; margin: 10px 0; }
-    button { background: #007bff; color: white; border: none; border-radius: 5px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #ffffff, #5a90a2, #5088a0, #0f2027);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      padding: 20px;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 100%;
+      animation: fadeInUp 0.8s ease forwards;
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h2 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    label {
+      color: #fff;
+      margin-top: 10px;
+      display: block;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+    }
+
+    input:focus {
+      box-shadow: 0 0 8px #00bfff;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #00bfff;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #009acd;
+      transform: scale(1.03);
+    }
+
+    @media (max-width: 480px) {
+      form {
+        padding: 30px 20px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      input, button {
+        font-size: 14px;
+        padding: 12px;
+      }
+    }
   </style>
 </head>
+<body>
 
-<h2 style="text-align: center;">STUDENT SIGN UP</h2>
-<form id="signupForm">
-  <input type="text" id="name" placeholder="Name" required>
-  <label for="college">Select College:</label>
-  <input list="colleges" name="college" id="college" placeholder="Choose your college" />
-  <datalist id="colleges">
-    <option value="Techno India Kolkata">
-    <option value="Techno Main Salt Lake">
-    <option value="Techno India">
-    <option value="Techno University">
-  </datalist>
-  <input type="text" id="studentId" placeholder="Student ID" required>
-  <input type="password" id="password" placeholder="Password" required>
-  <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
-  <button type="submit">Sign Up</button>
-</form>
-<script>
-const allowedIds = ["2345678","3456789","4567890","123456789","876543"];
+  <form id="signupForm">
+    <h2>STUDENT SIGN UP</h2>
+    <input type="text" id="name" placeholder="Name" required />
+    
+    <label for="college">Select College:</label>
+    <input list="colleges" name="college" id="college" placeholder="Choose your college" />
+    <datalist id="colleges">
+      <option value="Techno India Kolkata">
+      <option value="Techno Main Salt Lake">
+      <option value="Techno India">
+      <option value="Techno University">
+    </datalist>
 
-  document.getElementById("signupForm").addEventListener("submit", function (e) {
-    e.preventDefault();
+    <input type="text" id="studentId" placeholder="Student ID" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+    <button type="submit">Sign Up</button>
+  </form>
 
-    const studentId = document.getElementById("studentId").value.trim();
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+  <script>
+    const allowedIds = ["2345678", "3456789", "4567890", "123456789", "876543"];
 
-    if (!allowedIds.includes(studentId)) {
-      alert("Student ID not authorized.");
-      return;
-    }
+    document.getElementById("signupForm").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
+      const studentId = document.getElementById("studentId").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
 
-    const existingUsers = JSON.parse(localStorage.getItem("students")) || [];
-    const alreadyExists = existingUsers.find(u => u.studentId === studentId);
-    if (alreadyExists) {
+      if (!allowedIds.includes(studentId)) {
+        alert("Student ID not authorized.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      const existingUsers = JSON.parse(localStorage.getItem("students")) || [];
+      const alreadyExists = existingUsers.find(u => u.studentId === studentId);
+      
+      if (alreadyExists) {
         alert("Student ID already registered.");
         return;
       }
-  
+
       existingUsers.push({ studentId, password });
       localStorage.setItem("students", JSON.stringify(existingUsers));
-  
+
       alert("Sign up successful!");
       window.location.href = "login.html";
     });
   </script>
-  
-  </body>
-  </html>
+</body>
+</html>

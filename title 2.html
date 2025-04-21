@@ -1,84 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+  <link rel = "stylesheet" href = "title.css">
   <meta charset="UTF-8">
   <title>Faculty Administration Sign Up</title>
-  <link rel="stylesheet" href="title.css">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(-45deg, #ffffff, #5a90a2, #5088a0, #0f2027);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-    }
-
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    h1 {
-      text-align: center;
-      color: #fff;
-      margin-top: 40px;
-    }
-
-    form {
-      background: #ffffff;
-      padding: 30px;
-      border-radius: 15px;
-      max-width: 400px;
-      margin: 40px auto;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    input, button {
-      width: 100%;
-      margin: 10px 0;
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    input:focus {
-      border-color: #007bff;
-      outline: none;
-    }
-
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background: #0056b3;
-    }
-
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-    }
+  
+ 
   </style>
 </head>
 <body>
-
-  <h1>FACULTY ADMINISTRATION SIGN UP</h1>
-
+  <h1 style="text-align: center;">FACULTY ADMINISTRATION SIGN UP</h1>
   <form id="signupForm">
     <input type="email" id="email" placeholder="Email" required>
-
+    
     <label for="college">Select College:</label>
     <input list="colleges" id="collegeName" placeholder="Choose your college" required>
     <datalist id="colleges">
@@ -123,13 +58,14 @@
           return;
         }
 
+        // Save new user
         existingUsers.push({ email, password, collegeName, universityName });
         localStorage.setItem("faculty administration", JSON.stringify(existingUsers));
+
 
         window.location.href = "title2.html";
       });
     });
   </script>
-
 </body>
 </html>

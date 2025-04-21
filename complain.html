@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Complaint Form</title>
+  <style>
+    :root {
+      --primary: #ef4444;
+      --primary-hover: #dc2626;
+      --bg: #fef2f2;
+      --card: #fff;
+      --text: #333;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 50px 20px;
+      margin: 0;
+    }
+
+    .complaint-form {
+      background: var(--card);
+      max-width: 500px;
+      width: 100%;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      animation: slideIn 0.6s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f9fafb;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 12px;
+      width: 100%;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .success-message {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      color: #92400e;
+      border-radius: 6px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="complaint-form">
+    <h2>Student Complaint Form</h2>
+    <form id="complaintForm">
+      <label for="studentName">Student Name:</label>
+      <input type="text" id="studentName" name="studentName" required>
+
+      <label for="studentId">Student ID:</label>
+      <input type="text" id="studentId" name="studentId" required>
+
+      <label for="category">Complaint Category:</label>
+      <select id="category" name="category" required>
+        <option value="" disabled selected>Select an option</option>
+        <option value="faculty">Faculty Issue</option>
+        <option value="marks">Marking Issue</option>
+        <option value="facility">Facility/Hostel</option>
+        <option value="harassment">Harassment/Bullying</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="message">Complaint Description:</label>
+      <textarea id="message" name="message" required></textarea>
+
+      <label for="proof">Attach File (optional):</label>
+      <input type="file" id="proof" name="proof" accept=".png,.jpg,.pdf,.docx,.zip">
+
+      <button type="submit">Submit Complaint</button>
+    </form>
+
+    <div id="success" class="success-message">
+      ✅ Your complaint has been submitted successfully. We will get back to you shortly.
+    </div>
+  </div>
+
+  <script>
+     document.getElementById('complaintForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const studentName = document.getElementById('studentName').value;
+    const studentId = document.getElementById('studentId').value;
+    const category = document.getElementById('category').value;
+    const message = document.getElementById('message').value;
+    const fileInput = document.getElementById('proof');
+    const file = fileInput.files[0];
+
+    const reader = new FileReader();
+    reader.onload = function() {
+      const complaint = {
+        studentName,
+        studentId,
+        category,
+        message,
+        fileName: file ? file.name : null,
+        fileData: file ? reader.result : null,
+        date: new Date().toLocaleString()
+      };
+
+      const existing = JSON.parse(localStorage.getItem('complaints') || '[]');
+      existing.push(complaint);
+      localStorage.setItem('complaints', JSON.stringify(existing));
+
+      document.getElementById('success').style.display = 'block';
+      document.getElementById('complaintForm').reset();
+    };
+
+    if (file) {
+      reader.readAsDataURL(file); // Read file content
+    } else {
+      reader.onload(); // Proceed without file
+    }
+  });
+  </script>
+
+</body>
+</html>

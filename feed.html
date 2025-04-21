@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Campus Core </title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(-45deg, #0f2027, #5a90a2, #5088a0, #0f2027);
+      background-size: 400% 400%;
+      animation: bgAnim 12s ease infinite;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes bgAnim {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    header {
+      padding: 16px 24px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(6px);
+      text-align: center;
+    }
+    header h1 { font-size: 24px; }
+    main {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .feed-form,
+    .memo-card {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      padding: 20px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      animation: fadeIn 0.5s ease;
+    }
+    .feed-form input[type="text"],
+    .feed-form textarea,
+    .memo-card textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      outline: none;
+      transition: background 0.3s;
+    }
+    .feed-form textarea, .memo-card textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .feed-form button {
+      background: #5a90a2;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .feed-form button:hover {
+      background: #3c6d7d;
+    }
+    .feed-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      max-width: 600px;
+    }
+    .post-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      animation: fadeIn 0.5s ease;
+    }
+    .post-card h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+    .post-card p {
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .post-card time {
+      font-size: 12px;
+      color: #ddd;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 640px) {
+      .feed-form, .feed-list, .memo-card { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Campus Core </h1>
+  </header>
+  <main>
+    <form id="feedForm" class="feed-form">
+      <h2>memo-card for YOU!</h2>
+      <input type="text" id="postTitle" placeholder="Title (e.g., physics class)" required>
+      <textarea id="postContent" placeholder="What's the next thing you would do next" required></textarea>
+      <button type="submit">Post</button>
+    </form>
+
+    <div class="memo-card">
+      <h2>to do list📒</h2>
+      <textarea id="memoText" placeholder="Write your private notes here..."></textarea>
+    </div>
+
+    <div id="feedList" class="feed-list"></div>
+  </main>
+
+  <script>
+    const feedForm = document.getElementById('feedForm');
+    const feedList = document.getElementById('feedList');
+    const memoText = document.getElementById('memoText');
+
+    let posts = JSON.parse(localStorage.getItem('campusPosts')) || [];
+    function renderPosts() {
+      feedList.innerHTML = '';
+      posts.slice().reverse().forEach(post => {
+        const card = document.createElement('div');
+        card.className = 'post-card';
+        card.innerHTML = `
+          <h3>${post.title}</h3>
+          <p>${post.content}</p>
+          <time>${new Date(post.timestamp).toLocaleString()}</time>
+        `;
+        feedList.appendChild(card);
+      });
+    }
+    renderPosts();
+
+    feedForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const title = document.getElementById('postTitle').value.trim();
+      const content = document.getElementById('postContent').value.trim();
+      if (!title || !content) return;
+
+      const newPost = { title, content, timestamp: Date.now() };
+      posts.push(newPost);
+      localStorage.setItem('campusPosts', JSON.stringify(posts));
+
+      feedForm.reset();
+      renderPosts();
+    });
+
+    // Memo persistence
+    memoText.value = localStorage.getItem('userMemo') || '';
+    memoText.addEventListener('input', () => {
+      localStorage.setItem('userMemo', memoText.value);
+    });
+  </script>
+</body>
+</html>
